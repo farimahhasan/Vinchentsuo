@@ -17,13 +17,15 @@ public class Vinincave : MonoBehaviour
     public AudioSource soundWatch;
     public AudioSource defualt;
 
+    public GameObject camera;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         rotation = transform.eulerAngles;
         defualt.Play();
-
+      
     }
 
     void Update()
@@ -45,20 +47,21 @@ public class Vinincave : MonoBehaviour
             transform.Translate(Vector2.right * speed * direction * Time.deltaTime);
         }
 
-
+        camera.transform.position = new Vector3(transform.position.x , 0 , -10);
     }
 
         private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("watch"))
+        if (collision.gameObject.tag =="watch")
         {
             soundWatch.Play();
-            Invoke("LoadMaster" , 1);
+            Destroy(collision.gameObject);
+            Invoke("LoadHybnosis" ,1);
         }
 
     }
 
-   public void LoadMaster() {
-       SceneManager.LoadScene("master");
+   public void LoadHybnosis() {
+       SceneManager.LoadScene("Hybnosis");
    }
  }
