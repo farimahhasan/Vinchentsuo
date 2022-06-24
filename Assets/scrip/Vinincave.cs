@@ -47,6 +47,7 @@ public class Vinincave : MonoBehaviour
             transform.Translate(Vector2.right * speed * direction * Time.deltaTime);
         }
 
+
         camera.transform.position = new Vector3(transform.position.x , 0 , -10);
     }
 
