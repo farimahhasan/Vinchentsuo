@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Enemy1 : MonoBehaviour
 {
+    public AudioSource sound;
 
-    public float speed = 3f;
+    public float speed = 1f;
     public float velocity;
     public float links;
     private Vector3 rotation;
     private Animator anim;
-    private bool attack=false;
-    public int healthNumber = 4;
+
     public GameObject enemys;
+
+    public GameObject back;
+    public GameObject front;
+
     void Start()
     {
         velocity = transform.position.x + velocity;
@@ -22,39 +26,17 @@ public class Enemy1 : MonoBehaviour
     }
 
 
-    
-         private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag =="vin")
-        {
-            anim.SetBool("attack",true);
-
-            healthNumber--;
-            if(healthNumber==0){
-             anim.SetBool("die",true);
-            Invoke("hideenemy" ,1);
-
-            }
-
-           attack=true;
-
-        }
-
-    }
-    private void OnTriggerExit2D(Collider2D collision){
-       anim.SetBool("attack",false);
-       attack=false;
-
-    }
-     
-     public void hideenemy(){
-        enemys.SetActive(false);
-     }
-
-
     void Update()
     {
-       if(!attack){
+
+        if(front.GetComponent<Front>().attack==true){
+           anim.SetBool("attack",true);
+        }
+        else{
+            anim.SetBool("attack",false);
+        }
+
+       if(!(front.GetComponent<Front>().attack)){
         transform.Translate(Vector3.left * speed * Time.deltaTime);
             anim.SetBool("moving",true);
             anim.SetBool("attack",false);
@@ -69,9 +51,22 @@ public class Enemy1 : MonoBehaviour
             transform.eulerAngles = rotation ;
 
         }
+
        }
 
-    
+          if(back.GetComponent<Backenemy>().healthNumber==0){
+            anim.SetBool("die",true);
+            sound.Play();
+            Invoke("hide" ,1);
+
+          }
+
     }
+
+    public void hide(){
+        enemys.SetActive(false);
+    }
+
+    
 }
 

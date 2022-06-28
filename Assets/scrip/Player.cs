@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 {
 
 
+    public AudioSource sound;
 
     public float speed = 5;
     private Rigidbody2D rb;
@@ -21,12 +22,13 @@ public class Player : MonoBehaviour
 
 
     public GameObject camera;
-    public GameObject enemy1;
-    public GameObject enemy2;
-    public GameObject enemy3;
-    public GameObject enemy4;
 
-    public int healthNumber = 6;
+
+    public int healthNumber = 3;
+
+    public GameObject herat1;
+    public GameObject herat2;
+    public GameObject herat3;
 
     void Start()
     {
@@ -71,14 +73,30 @@ public class Player : MonoBehaviour
 
           private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag =="enemy")
+        if (collision.gameObject.tag =="front")
         {
             healthNumber--;
-            if(healthNumber==0){
+            print(healthNumber);
+            if(healthNumber==2){
+                herat1.SetActive(false);
+            }
+            if(healthNumber==1){
+                herat2.SetActive(false);
+            }
+           if(healthNumber==0){
+            herat3.SetActive(false);
              anim.SetBool("die",true);
+             sound.Play();
             Invoke("Loadgameover" ,1);
 
             }
+        }
+        
+
+       if (collision.gameObject.tag =="Finish")
+        {
+
+            Invoke("Loadvictory" ,1);
         }
 
     }
@@ -86,29 +104,6 @@ public class Player : MonoBehaviour
           public void Loadgameover() {
        SceneManager.LoadScene("gameover");
    }
-
-
-
-/* 
-          private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag =="finish")
-        {
-            if(enemy1.SetActive==false){
-
-            }
-
-            Invoke("Loadgameover" ,1);
-
-            }
-        }
-
-    } */
-
-
-
-
-
 
 
 

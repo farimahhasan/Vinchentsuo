@@ -7,9 +7,16 @@ public class Master : MonoBehaviour
 {
     void Start()
     {
-          Invoke("LoadMaster" ,37);
+          Invoke("LoadMaster" ,36);
     }
 
+    void Update(){
+      
+    if (Input.GetKeyDown(KeyCode.Space)) {
+   
+           SceneManager.LoadScene("game");
+           } 
+    }
       public void LoadMaster() {
        SceneManager.LoadScene("game");
    }
